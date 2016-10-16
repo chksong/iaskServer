@@ -1,11 +1,26 @@
 
 {{define "head"}}
+    <link rel="stylesheet" media="screen" href="/static/login.css">
 {{end}}
 
 {{ define "body" }}
 
 <div class="container">
-    login html
+
+    <form class="form-signin" id="login-form" action="/QAdmin/login" method="POST">
+
+        <div id="result"> {{ .MessageLogin }} </div>
+
+        {{ .xsrfdata }}
+        <h2 class="form-signin-heading"> {{ .FormTitle }}</h2>
+        <input type="text" id="username" name="username"  class="" placeholder="user@goipc.cn"><br/>
+        <input type="password" id="passwd" name="passwd" class="" placeholder="Password"><br/>
+        <input type="text" name="captcha" />
+
+
+        <button class="btn btn-large btn-primary" type="submit">登录</button>
+    </form>
+
 </div>
 
 
