@@ -1,4 +1,4 @@
-package Password
+package common
 
 import (
 	"math/rand"

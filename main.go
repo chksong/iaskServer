@@ -2,10 +2,12 @@ package main
 import (
 
 	"net/http"
-
-	"github.com/gorilla/mux"
 	"github.com/codegangsta/negroni"
 	"fmt"
+	"iaskServer/routers"
+	"log"
+
+	"iaskServer/common"
 )
 
 func hello(w http.ResponseWriter , r* http.Request)  {
@@ -15,20 +17,22 @@ func hello(w http.ResponseWriter , r* http.Request)  {
 
 
 func main() {
-	//google 内置的多路器
-	//muxold := http.NewServeMux()
-	//fs := http.FileServer(http.Dir("."))
-	//muxold.Handle("/public/" ,fs)
+	//calls startup logic
+	common.StartUp()
 
+	//Get the mux route object
+	router := routers.InitRouters()
 
-	gorillaRoute := mux.NewRouter()
-	//gorillaRoute.HandleFunc("api/{user:[0-9]+}" ,hello)
-	gorillaRoute.PathPrefix("/public/").Handler(http.StripPrefix("/public/" , http.FileServer(http.Dir("public/"))))
-
+	//add init web
+	//Web.Init()
 
 	n := negroni.Classic()
-	//n.Use(negroni.Wrap(gorillaRoute))
+	n.UseHandler(router)
 
-	n.UseHandler(gorillaRoute)
-	n.Run(":8080")
+	server := &http.Server{
+		Addr:common.AppConfig.Server,
+		Handler:n ,
+	}
+	log.Println("Listening ...........")
+	server.ListenAndServe()
 }
