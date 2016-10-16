@@ -11,12 +11,14 @@ func setAdminsRouter(router *mux.Router) *mux.Router  {
 	adminRouter := mux.NewRouter()
 	adminRouter.HandleFunc("/QAdmins" ,Admins.Index)
 	adminRouter.HandleFunc("/QAdmins/index" , Admins.Index)
-	adminRouter.HandleFunc("QAdmins/login" , Admins.Login)
+
 
 	router.PathPrefix("/QAdmin").Handler(negroni.New(
 		negroni.HandlerFunc(common.AdminsAuthorize) ,
 		negroni.Wrap(adminRouter),
 	))
+
+	router.HandleFunc("/admlogin" , Admins.Login)
 
 	return router
 }
