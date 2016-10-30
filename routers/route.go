@@ -2,6 +2,7 @@ package routers
 
 import (
 	"github.com/gorilla/mux"
+
 )
 
 func InitRouters() *mux.Router  {
@@ -9,9 +10,6 @@ func InitRouters() *mux.Router  {
 
 	router  = SetWebRoutes(router)
 	router  = setAdminsRouter(router)
-
-
-
 
 	return  router
 }

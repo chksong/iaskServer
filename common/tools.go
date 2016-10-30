@@ -10,3 +10,4 @@ func Redirect(w http.ResponseWriter , url string ,code int )  {
 	w.Header().Set("Location" , url)
 	w.WriteHeader(code)
 }
+

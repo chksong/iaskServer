@@ -18,7 +18,8 @@ func setAdminsRouter(router *mux.Router) *mux.Router  {
 		negroni.Wrap(adminRouter),
 	))
 
-	router.HandleFunc("/admlogin" , Admins.Login)
+	router.HandleFunc("/admlogin" , Admins.Login).Methods("GET")
+	router.HandleFunc("/admlogin" , Admins.CheckAdmin).Methods("POST")
 
 	return router
 }

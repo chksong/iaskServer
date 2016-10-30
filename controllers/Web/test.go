@@ -16,7 +16,7 @@ func Test (w http.ResponseWriter , r* http.Request)  {
 func Index (w http.ResponseWriter , r* http.Request)  {
 	//renderTemplate(w , "index" ,"base" ,nil)
 
-	tmpl := template.Must(template.ParseFiles("templates/index.html" ,"templates/base.html"))
+	tmpl := template.Must(template.ParseFiles("templates/Web/index.html" ,"templates/Web/base.html"))
 	err := tmpl.ExecuteTemplate(w, "base" ,nil)
 	if err != nil {
 		http.Error(w, err.Error() , http.StatusInternalServerError)

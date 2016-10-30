@@ -8,7 +8,7 @@ import (
 )
 
 func SetWebRoutes(router *mux.Router) *mux.Router {
-	router.PathPrefix("/static/").Handler(http.StripPrefix("/static/" , http.FileServer(http.Dir("static/"))))
+	router.PathPrefix("/assets/").Handler(http.StripPrefix("/assets/" , http.FileServer(http.Dir("assets/"))))
 	router.HandleFunc("/test" , web.Test)
 
 	router.HandleFunc("/index" , web.Index)

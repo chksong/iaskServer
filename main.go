@@ -8,6 +8,7 @@ import (
 	"log"
 
 	"iaskServer/common"
+	"github.com/gorilla/csrf"
 )
 
 func hello(w http.ResponseWriter , r* http.Request)  {
@@ -29,10 +30,13 @@ func main() {
 	n := negroni.Classic()
 	n.UseHandler(router)
 
-	server := &http.Server{
-		Addr:common.AppConfig.Server,
-		Handler:n ,
-	}
+	//server := &http.Server{
+	//	Addr:common.AppConfig.Server,
+	//	Handler:n ,
+	//}
 	log.Println("Listening ...........")
-	server.ListenAndServe()
+	//server.ListenAndServe()
+
+	http.ListenAndServe(common.AppConfig.Server,
+		csrf.Protect([]byte("f943c6fe3b10ca918d17a327fc836c5a"))(n))
 }
