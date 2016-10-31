@@ -6,7 +6,7 @@ import (
 )
 
 func InitRouters() *mux.Router  {
-	router  := mux.NewRouter().StrictSlash(false)
+	router  := mux.NewRouter().StrictSlash(true)
 
 	router  = SetWebRoutes(router)
 	router  = setAdminsRouter(router)

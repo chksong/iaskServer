@@ -2,13 +2,13 @@ package main
 import (
 
 	"net/http"
-	"github.com/codegangsta/negroni"
 	"fmt"
 	"iaskServer/routers"
 	"log"
 
 	"iaskServer/common"
 	"github.com/gorilla/csrf"
+	"github.com/codegangsta/negroni"
 )
 
 func hello(w http.ResponseWriter , r* http.Request)  {
@@ -30,13 +30,16 @@ func main() {
 	n := negroni.Classic()
 	n.UseHandler(router)
 
-	//server := &http.Server{
-	//	Addr:common.AppConfig.Server,
-	//	Handler:n ,
-	//}
-	log.Println("Listening ...........")
-	//server.ListenAndServe()
+	log.Println("Listening ........")
+/*	server := &http.Server{
+		Addr:common.AppConfig.Server,
+		Handler:n ,
+	}*/
 
-	http.ListenAndServe(common.AppConfig.Server,
-		csrf.Protect([]byte("f943c6fe3b10ca918d17a327fc836c5a"))(n))
+
+	crsfKey := []byte("keep-it-secret-keep-it-safe-----")
+	CSRF := csrf.Protect(crsfKey)
+
+	//添加csrf 保护
+	http.ListenAndServe(common.AppConfig.Server, CSRF(n))
 }

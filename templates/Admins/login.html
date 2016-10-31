@@ -7,9 +7,10 @@
 
 <div class="container">
 
-    <form class="form-signin" id="login-form" action="/admlogin" method="POST">
-        {{ .csrfField }}
+    <form class="form-signin" id="login-form" action="/admlogin/post" method="POST">
+
         <div id="result"> {{ .title }} </div>
+        {{ .csrfField }}
 
 
         <h2 class="form-signin-heading"> {{ .title }}</h2>

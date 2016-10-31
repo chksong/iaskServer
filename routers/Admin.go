@@ -8,7 +8,7 @@ import (
 )
 
 func setAdminsRouter(router *mux.Router) *mux.Router  {
-	adminRouter := mux.NewRouter()
+	adminRouter := mux.NewRouter().StrictSlash(true)
 	adminRouter.HandleFunc("/QAdmins" ,Admins.Index)
 	adminRouter.HandleFunc("/QAdmins/index" , Admins.Index)
 
@@ -18,8 +18,8 @@ func setAdminsRouter(router *mux.Router) *mux.Router  {
 		negroni.Wrap(adminRouter),
 	))
 
-	router.HandleFunc("/admlogin" , Admins.Login).Methods("GET")
-	router.HandleFunc("/admlogin" , Admins.CheckAdmin).Methods("POST")
+	router.HandleFunc("/admlogin" , Admins.ShowSignupForm).Methods("GET")
+	router.HandleFunc("/admlogin/post" , Admins.SubmitSignupForm).Methods("POST")
 
 	return router
 }

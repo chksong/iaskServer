@@ -19,13 +19,16 @@ func Index (w http.ResponseWriter , r* http.Request)  {
 	}
 }
 
-func Login (w http.ResponseWriter , r* http.Request)  {
+func ShowSignupForm(w http.ResponseWriter , r* http.Request)  {
 	tmpl := template.Must(template.ParseFiles("templates/Admins/login.html" ,"templates/Admins/base.html"))
 
 	locals := make(map[string]interface{})
 	//locals["title"]  = "test"
 	//csrf.TemplateTag: csrf.TemplateField(r),
-	locals[csrf.TemplateTag] = csrf.TemplateField(r)
+	//locals[csrf.TemplateTag] = csrf.TemplateField(r)
+
+
+	w.Header().Set("X-CSRF-Token", csrf.Token(r))
 
 
 	err := tmpl.ExecuteTemplate(w, "base" ,locals)
@@ -38,7 +41,7 @@ func Login (w http.ResponseWriter , r* http.Request)  {
 /**
  *   检查admin权限
  */
-func CheckAdmin(w http.ResponseWriter , r* http.Request)  {
+func SubmitSignupForm(w http.ResponseWriter , r* http.Request)  {
 	log.Printf("[CheckAdmin]   ......") ;
 
 	cookie := &http.Cookie{
