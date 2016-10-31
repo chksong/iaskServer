@@ -24,8 +24,7 @@ func ShowSignupForm(w http.ResponseWriter , r* http.Request)  {
 
 	locals := make(map[string]interface{})
 	//locals["title"]  = "test"
-	//csrf.TemplateTag: csrf.TemplateField(r),
-	//locals[csrf.TemplateTag] = csrf.TemplateField(r)
+	locals[csrf.TemplateTag] = csrf.TemplateField(r)
 
 
 	w.Header().Set("X-CSRF-Token", csrf.Token(r))

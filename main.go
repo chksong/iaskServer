@@ -28,6 +28,8 @@ func main() {
 	//Web.Init()
 
 	n := negroni.Classic()
+
+	n.Use(negroni.NewStatic(http.Dir("/tmp")))
 	n.UseHandler(router)
 
 	log.Println("Listening ........")
