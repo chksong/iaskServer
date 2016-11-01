@@ -24,6 +24,17 @@ func AdminsAuthorize(w http.ResponseWriter , r* http.Request , next http.Handler
 	}
 }
 
+
+/**
+ *  验证Crsf
+ */
+func CrsfAuthorize(w http.ResponseWriter , r* http.Request , next http.HandlerFunc)  {
+	CSRF(next)
+}
+
+
+
+
 /**
  *   日志帮主函数
  */

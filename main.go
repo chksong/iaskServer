@@ -34,5 +34,5 @@ func main() {
 	//}
 
 	//添加csrf 保护
-	http.ListenAndServe(common.AppConfig.Server, n)
+	http.ListenAndServe(common.AppConfig.Server, common.CSRF(n))
 }
