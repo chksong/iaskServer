@@ -7,7 +7,6 @@ import (
 	"log"
 
 	"iaskServer/common"
-	"github.com/gorilla/csrf"
 	"github.com/codegangsta/negroni"
 )
 
@@ -21,27 +20,19 @@ func main() {
 	//calls startup logic
 	common.StartUp()
 
-	//Get the mux route object
+	//出事话路由
 	router := routers.InitRouters()
 
-	//add init web
-	//Web.Init()
 
 	n := negroni.Classic()
-
-	n.Use(negroni.NewStatic(http.Dir("/tmp")))
 	n.UseHandler(router)
 
 	log.Println("Listening ........")
-/*	server := &http.Server{
-		Addr:common.AppConfig.Server,
-		Handler:n ,
-	}*/
-
-
-	crsfKey := []byte("keep-it-secret-keep-it-safe-----")
-	CSRF := csrf.Protect(crsfKey)
+	//server := &http.Server{
+	//	Addr:common.AppConfig.Server,
+	//	Handler:n ,
+	//}
 
 	//添加csrf 保护
-	http.ListenAndServe(common.AppConfig.Server, CSRF(n))
+	http.ListenAndServe(common.AppConfig.Server, n)
 }

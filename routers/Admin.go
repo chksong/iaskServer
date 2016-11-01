@@ -5,6 +5,7 @@ import (
 	"iaskServer/controllers/Admins"
 	"github.com/codegangsta/negroni"
 	"iaskServer/common"
+	"net/http"
 )
 
 func setAdminsRouter(router *mux.Router) *mux.Router  {
@@ -18,8 +19,13 @@ func setAdminsRouter(router *mux.Router) *mux.Router  {
 		negroni.Wrap(adminRouter),
 	))
 
-	router.HandleFunc("/admlogin" , Admins.ShowSignupForm).Methods("GET")
-	router.HandleFunc("/admlogin/post" , Admins.SubmitSignupForm).Methods("POST")
+
+
+	auth := router.PathPrefix("/auth").Subrouter()
+	auth.Handle("/admlogin" , http.HandlerFunc(Admins.ShowSignupForm)).Methods("GET")
+	auth.Handle("/admlogin" , http.HandlerFunc(Admins.SubmitSignupForm)).Methods("POST")
+
+
 
 	return router
 }
