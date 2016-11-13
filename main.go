@@ -9,7 +9,7 @@ import (
 	"iaskServer/common"
 	"github.com/codegangsta/negroni"
 
-	"github.com/gorilla/csrf"
+	"iaskServer/csrf"
 )
 
 func hello(w http.ResponseWriter , r* http.Request)  {
@@ -34,8 +34,9 @@ func main() {
 	//	Addr:common.AppConfig.Server,
 	//	Handler:n ,
 	//}
-
-	crsfKey := []byte("keep-it-secret-keep-it-safe-----")
+	//生成32字符
+	//openssl rand -base64 32 |head  -c 32
+	crsfKey := []byte("tTKCH86aTVEphRM5LrD6Ps/usAbLAQQr")
 	CSRF := csrf.Protect(crsfKey,csrf.Secure(false))
 
 	//添加csrf 保护
