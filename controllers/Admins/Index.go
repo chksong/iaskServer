@@ -6,11 +6,25 @@ import (
 	"iaskServer/common"
 	"log"
 	"github.com/gorilla/csrf"
+	"fmt"
 )
 
 
 func Index (w http.ResponseWriter , r* http.Request)  {
 	//renderTemplate(w , "index" ,"base" ,nil)
+
+	cookie := &http.Cookie{
+		Name:"testCookie" ,
+		Value: "99999" ,
+		Path: "/token/",
+		Secure:false  ,
+		HttpOnly:true ,
+		MaxAge: 3600 ,
+	}
+
+	http.SetCookie(w , cookie)
+
+
 
 	tmpl := template.Must(template.ParseFiles("templates/Admins/index.html" ,"templates/Admins/base.html"))
 	err := tmpl.ExecuteTemplate(w, "base" ,nil)
@@ -20,6 +34,14 @@ func Index (w http.ResponseWriter , r* http.Request)  {
 }
 
 func ShowSignupForm(w http.ResponseWriter , r* http.Request)  {
+
+
+	cookie, err_ := r.Cookie("testCookie")
+	fmt.Println("testCookie=======", cookie ,"err_==" ,err_)
+
+
+
+
 	tmpl := template.Must(template.ParseFiles("templates/Admins/login.html" ,"templates/Admins/base.html"))
 
 	locals := make(map[string]interface{})
@@ -35,6 +57,8 @@ func ShowSignupForm(w http.ResponseWriter , r* http.Request)  {
 	if err != nil {
 		http.Error(w, err.Error() , http.StatusInternalServerError)
 	}
+
+
 }
 
 /**
@@ -42,6 +66,10 @@ func ShowSignupForm(w http.ResponseWriter , r* http.Request)  {
  */
 func SubmitSignupForm(w http.ResponseWriter , r* http.Request)  {
 	log.Printf("[CheckAdmin]   ......") ;
+
+
+
+
 
 	cookie := &http.Cookie{
 		Name:"iaskiAdminToken" ,
@@ -55,5 +83,6 @@ func SubmitSignupForm(w http.ResponseWriter , r* http.Request)  {
 
 	http.SetCookie(w , cookie)
 
-	common.Redirect(w , "/QAdmins/index" ,http.StatusFound)
+	common.Redirect(w , "/QAdmins/index" ,http.StatusMovedPermanently)
+
 }

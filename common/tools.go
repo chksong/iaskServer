@@ -2,13 +2,11 @@ package common
 
 import (
 	"net/http"
-	"github.com/gorilla/csrf"
 )
 
 
 var (
-	crsfKey = []byte("keep-it-secret-keep-it-safe-----")
-	CSRF = csrf.Protect(crsfKey)
+
 )
 
 

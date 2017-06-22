@@ -23,7 +23,7 @@ func setAdminsRouter(router *mux.Router) *mux.Router  {
 
 	//auth := router.PathPrefix("/auth").Subrouter()
 	router.Handle("/auth/admlogin" , http.HandlerFunc(Admins.ShowSignupForm)).Methods("GET")
-	router.Handle("/auth/admlogin" ,  http.HandlerFunc(Admins.SubmitSignupForm)).Methods("POST")
+	router.Handle("/auth/admlogin" , http.HandlerFunc(Admins.SubmitSignupForm)).Methods("POST")
 
 
 

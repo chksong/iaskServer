@@ -4,11 +4,12 @@ import (
 	"net/http"
 	"time"
 	"log"
+	"fmt"
 )
 
 
 /**
- *    验证管理员权限
+ *    验证管理员权限, 不需要添加跳转
  */
 func AdminsAuthorize(w http.ResponseWriter , r* http.Request , next http.HandlerFunc)  {
 	if adminCookie ,err := r.Cookie("iaskiAdminToken") ; err == nil {
@@ -17,10 +18,11 @@ func AdminsAuthorize(w http.ResponseWriter , r* http.Request , next http.Handler
 		} else {
 			//http.Redirect(w ,r , "/QAdmin/login" ,http.StatusFound)
 
-			Redirect(w , "/auth/admlogin" ,http.StatusFound)
+			//Redirect(w , "/auth/admlogin" ,http.StatusFound)
+			fmt.Fprintln(w, "前先登录")
 		}
 	} else {
-		Redirect(w , "/auth/admlogin" ,http.StatusFound)
+		//Redirect(w , "/auth/admlogin" ,http.StatusFound)
 	}
 }
 
@@ -29,7 +31,7 @@ func AdminsAuthorize(w http.ResponseWriter , r* http.Request , next http.Handler
  *  验证Crsf
  */
 func CrsfAuthorize(w http.ResponseWriter , r* http.Request , next http.HandlerFunc)  {
-	CSRF(next)
+
 }
 
 
