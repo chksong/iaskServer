@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 	"log"
-	"fmt"
+//	"fmt"
 )
 
 
@@ -12,18 +12,21 @@ import (
  *    验证管理员权限, 不需要添加跳转
  */
 func AdminsAuthorize(w http.ResponseWriter , r* http.Request , next http.HandlerFunc)  {
-	if adminCookie ,err := r.Cookie("iaskiAdminToken") ; err == nil {
-		if adminCookie.Value == "99999" {
-			next(w, r)
-		} else {
-			//http.Redirect(w ,r , "/QAdmin/login" ,http.StatusFound)
-
-			//Redirect(w , "/auth/admlogin" ,http.StatusFound)
-			fmt.Fprintln(w, "前先登录")
-		}
-	} else {
-		//Redirect(w , "/auth/admlogin" ,http.StatusFound)
-	}
+	//if adminCookie ,err := r.Cookie("iaskiAdminToken") ; err == nil {
+	//	if adminCookie.Value == "99999" {
+	//		next(w, r)
+	//	} else {
+	//		http.Redirect(w ,r , "/QAdmin/login2" ,http.StatusMovedPermanently)
+	//
+	//		//Redirect(w , "/auth/admlogin" ,http.StatusFound)
+	//		//fmt.Fprintln(w, "前先登录")
+	//
+	//	}
+	//} else {
+	//	// 没有验证过，所以验证登录
+	//	//Redirect(w , "/auth/admlogin" ,http.StatusFound)
+	//}
+	next(w,r)
 }
 
 

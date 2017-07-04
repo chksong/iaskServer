@@ -10,6 +10,7 @@ func InitRouters() *mux.Router  {
 
 	router  = SetWebRoutes(router)
 	router  = setAdminsRouter(router)
+	router  = SetApiRouter(router)
 
 	/**
 	  *  修改服务器权限， 检查CSRF的安全性
