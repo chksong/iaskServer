@@ -3,26 +3,26 @@ package Admins
 import (
 	"html/template"
 	"net/http"
-	"iaskServer/common"
+//	"iaskServer/common"
 	"log"
 	"github.com/gorilla/csrf"
 	"fmt"
+	"iaskServer/common"
 )
 
 
 func Index (w http.ResponseWriter , r* http.Request)  {
 	//renderTemplate(w , "index" ,"base" ,nil)
 
-	cookie := &http.Cookie{
-		Name:"testCookie" ,
+	cookie := http.Cookie{
+		Name:"adminCookie" ,
 		Value: "99999" ,
-		Path: "/token/",
+		Path: "/",
 		Secure:false  ,
 		HttpOnly:true ,
 		MaxAge: 3600 ,
 	}
-
-	http.SetCookie(w , cookie)
+	http.SetCookie(w , &cookie)
 
 
 
@@ -35,9 +35,21 @@ func Index (w http.ResponseWriter , r* http.Request)  {
 
 func ShowSignupForm(w http.ResponseWriter , r* http.Request)  {
 
+	cookie := http.Cookie{
+		Name:"testCookie" ,
+		Value: "99999" ,
+		Path: "/token/",
+		Secure:false  ,
+		HttpOnly:false ,
+		MaxAge: 3600 ,
+	}
 
-	cookie, err_ := r.Cookie("testCookie")
-	fmt.Println("testCookie=======", cookie ,"err_==" ,err_)
+	http.SetCookie(w , &cookie)
+
+
+
+	cookie2, err_ := r.Cookie("testCookie")
+	fmt.Println("testCookie=======", cookie2 ,"err_==" ,err_)
 
 
 
@@ -67,9 +79,8 @@ func ShowSignupForm(w http.ResponseWriter , r* http.Request)  {
 func SubmitSignupForm(w http.ResponseWriter , r* http.Request)  {
 	log.Printf("[CheckAdmin]   ......") ;
 
-
-
-
+	fmt.Println("[ShowSignupForm] username: ", r.Form["username"])
+	fmt.Println("[ShowSignupForm] password: ", r.Form["passwd"])
 
 	cookie := &http.Cookie{
 		Name:"iaskiAdminToken" ,
@@ -81,8 +92,9 @@ func SubmitSignupForm(w http.ResponseWriter , r* http.Request)  {
 		Domain:"iaski.com" ,
 	}
 
+
+
+
 	http.SetCookie(w , cookie)
-
 	common.Redirect(w , "/QAdmins/index" ,http.StatusMovedPermanently)
-
 }

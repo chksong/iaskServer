@@ -10,7 +10,17 @@ import (
 func Test (w http.ResponseWriter , r* http.Request)  {
 	//renderTemplate(w , "index" ,"base" ,nil)
 
-	tmpl := template.Must(template.ParseFiles("templates/test.html" ,"templates/base.html"))
+	cookie := http.Cookie{
+		Name:"testCookie" ,
+		Value: "99999" ,
+		Path: "/",
+		Secure:false  ,
+		HttpOnly:false ,
+		MaxAge: 3600 ,
+	}
+	http.SetCookie(w , &cookie)
+
+	tmpl := template.Must(template.ParseFiles("templates/Web/test.html" ,"templates/Web/base.html"))
 	err := tmpl.ExecuteTemplate(w, "base" ,nil)
 	if err != nil {
 		http.Error(w, err.Error() , http.StatusInternalServerError)
